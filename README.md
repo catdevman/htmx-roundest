@@ -40,8 +40,7 @@ $ ngrok start --all
 ```
 # Using
 
-- Go to http://127.0.0.1:8989/ (https://big-beloved-pup.ngrok-free.app/) to login
-- After login with Google it should redirect you to the home screen
+- Go to http://127.0.0.1:8989/
 
 # TODOs
 
