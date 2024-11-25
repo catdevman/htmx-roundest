@@ -1,0 +1,68 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  htmx-roundest
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 5
+
+Resources:
+  roundestFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: roundest/
+      Handler: bootstrap 
+      Runtime: provided.al2
+      Events:
+        CatchAll:
+          Type: Api 
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+        Root:
+          Type: Api 
+          Properties:
+            Path: /
+            Method: ANY
+      Environment: 
+        Variables:
+          DDB_TABLE: !Ref roundestTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref roundestTable
+        - AmazonDynamoDBFullAccess
+    Metadata:
+      BuildMethod: makefile
+
+  roundestTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: pk
+          AttributeType: S
+        -
+          AttributeName: sk
+          AttributeType: S
+      KeySchema:
+        -
+          AttributeName: pk
+          KeyType: HASH
+        -
+          AttributeName: sk
+          KeyType: RANGE
+      TableName: roundest-ddb-table
+      BillingMode: PAY_PER_REQUEST
+
+Outputs:
+  roundestAPI:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  roundestFunction:
+    Description: "roundest Function ARN"
+    Value: !GetAtt roundestFunction.Arn
+  roundestFunctionIamRole:
+    Description: "Implicit IAM Role created for roundest function"
+    Value: !GetAtt roundestFunctionRole.Arn

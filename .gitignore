@@ -1,0 +1,5 @@
+tmp/
+docker/
+.aws-sam/
+**.sqlite
+**.sqlite3

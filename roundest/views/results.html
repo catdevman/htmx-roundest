@@ -1,0 +1,37 @@
+<nav class="flex flex-row justify-between items-center py-4 px-8">
+    <div class="flex items-baseline">
+      <a class="font-bold text-3xl" href="/">
+        round<span class="text-purple-300">est</span>
+      </a>
+      <p class="text-gray-400 font-extralight pl-2 text-2xl">
+        (Go/HTMX)
+      </p>
+    </div>
+    <div class="flex flex-row items-center gap-8">
+      <a href="/results" class="hover:underline text-lg">Results</a>
+    </div>
+</nav>
+<div class="flex justify-center min-w-1/2" >
+    <div class="min-w-[500px]">
+    <table class="table-fixed">
+      <thead class="border-b font-medium dark:border-neutral-500">
+        <tr>
+          <th class="px-5 py-4">ID</th>
+          <th class="px-5 py-4">Name</th>
+          <th class="px-5 py-4">Image</th>
+          <th class="px-5 py-4">Win-Loss</th>
+        </tr>
+      </thead>
+      <tbody id="pokemon-list">
+        {{ range .Pokemons }}
+            <tr hx-target="this" hx-swap="outerHTML"  class="border-b dark:border-neutral-500"> 
+              <td class="px-5 py-4">{{ .ID }}</td>
+              <td class="px-5 py-4">{{ .Name }}</td>
+              <td class="px-5 py-4"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{.ID}}.png" alt="Blank"/></td> 
+              <td class="px-5 py-4">{{ .WinCount }} - {{.LossCount}}</td>
+            </tr>
+        {{ end }}
+      </tbody>
+    </table>
+    </div>
+</div>
