@@ -25,13 +25,13 @@ $ aws --endpoint-url=http://127.0.0.1:8000 dynamodb create-table --table-name te
 - optional, this should hot rebuild for view and code changes but it wasn't always working perfectly
 ```sh { name=air background=true }
 $ export DDB_TABLE=test
-$ cd rounder
+$ cd roundest
 $ air
 ```
 - Use the go cli to run the project 
 ```sh { name=go }
 $ export DDB_TABLE=test
-$ cd rounder
+$ cd roundest
 $ go run ./
 ```
 
